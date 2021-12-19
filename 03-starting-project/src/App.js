@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import AddUser from "./components/Users/AddUser";
 import UserList from "./components/Users/UserList";
 import "./index.css";
@@ -21,10 +21,11 @@ function App() {
   };
 
   return (
-    <div>
+    // using react fragment as root element
+    <Fragment>
       <AddUser onAddUser={userListHandler}></AddUser>
       <UserList users={userList}></UserList>
-    </div>
+    </Fragment>
   );
 }
 
