@@ -82,7 +82,9 @@ const SimpleInput = (props) => {
           id="email"
           value={enteredEmail}
         />
-        {emailInputHasError && <p className="error-text">Email is Invalid!</p>}
+        {emailInputHasError && (
+          <p className="error-text">Email must contains '@'!</p>
+        )}
       </div>
       <div className="form-actions">
         <button disabled={!formIsValid} type="submit">
