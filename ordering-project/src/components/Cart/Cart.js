@@ -1,12 +1,15 @@
-import { useContext } from 'react';
+import { useContext, useState, Fragment } from "react";
 
-import Modal from '../UI/Modal';
-import CartItem from './CartItem';
-import classes from './Cart.module.css';
-import CartContext from '../../store/cart-context';
+import classes from "./Cart.module.css";
+import CartContext from "../../store/cart-context";
+
+import Modal from "../UI/Modal";
+import CartItem from "./CartItem";
+import Checkout from "./Checkout";
 
 const Cart = (props) => {
   const cartCtx = useContext(CartContext);
+  const [isCheckout, setIsCheckout] = useState(false);
 
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
   const hasItems = cartCtx.items.length > 0;
@@ -19,8 +22,21 @@ const Cart = (props) => {
     cartCtx.addItem(item);
   };
 
+  // for checking out
+  const checkoutState = (state) => {
+    setIsCheckout(state);
+  };
+
+  const submitOrder = () => {
+    // close checkout and modal
+    checkoutState(false);
+    props.onClose();
+    // reset cart
+    cartCtx.clearCart();
+  };
+
   const cartItems = (
-    <ul className={classes['cart-items']}>
+    <ul className={classes["cart-items"]}>
       {cartCtx.items.map((item) => (
         <CartItem
           key={item.id}
@@ -34,21 +50,40 @@ const Cart = (props) => {
     </ul>
   );
 
-  return (
-    <Modal onClose={props.onClose}>
+  let content = (
+    <Fragment>
       {cartItems}
       <div className={classes.total}>
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
       <div className={classes.actions}>
-        <button className={classes['button--alt']} onClick={props.onClose}>
+        <button className={classes["button--alt"]} onClick={props.onClose}>
           Close
         </button>
-        {hasItems && <button className={classes.button}>Order</button>}
+        {hasItems && (
+          <button
+            onClick={() => checkoutState(true)}
+            className={classes.button}
+          >
+            Order
+          </button>
+        )}
       </div>
-    </Modal>
+    </Fragment>
   );
+
+  // content for checkout
+  if (isCheckout) {
+    content = (
+      <Checkout
+        onConfirm={() => submitOrder()}
+        onCancel={() => checkoutState(false)}
+      />
+    );
+  }
+
+  return <Modal onClose={props.onClose}>{content}</Modal>;
 };
 
 export default Cart;
