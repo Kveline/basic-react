@@ -3,6 +3,7 @@ import classes from "./Checkout.module.css";
 const Checkout = (props) => {
   const confirmHandler = (event) => {
     event.preventDefault();
+    props.onConfirm();
   };
 
   return (
@@ -27,7 +28,7 @@ const Checkout = (props) => {
         <button type="button" onClick={props.onCancel}>
           Cancel
         </button>
-        <button onClick={props.onConfirm} className={classes.submit}>
+        <button type="submit" className={classes.submit}>
           Confirm
         </button>
       </div>

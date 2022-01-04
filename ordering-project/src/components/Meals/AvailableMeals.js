@@ -20,8 +20,7 @@ const AvailableMeals = () => {
     setMeals(mealList);
   }, []);
 
-  const httpData = useHttp(transformData);
-  const { isLoading, error, sendRequest } = httpData;
+  const { isLoading, error, sendRequest } = useHttp(transformData);
 
   useEffect(() => {
     sendRequest({
