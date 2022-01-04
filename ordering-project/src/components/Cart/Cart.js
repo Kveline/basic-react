@@ -31,7 +31,7 @@ const Cart = (props) => {
     setIsCheckout(state);
   };
 
-  const submitOrder = () => {
+  const submitOrder = (userData) => {
     sendRequest({
       url: "https://react-project-eb3a6-default-rtdb.firebaseio.com/orders.json",
       method: "POST",
@@ -39,6 +39,7 @@ const Cart = (props) => {
         "Content-Type": "application/json",
       },
       body: {
+        userData: userData,
         items: cartCtx.items,
       },
     });
@@ -92,7 +93,7 @@ const Cart = (props) => {
   if (isCheckout) {
     content = (
       <Checkout
-        onConfirm={() => submitOrder()}
+        onConfirm={(userData) => submitOrder(userData)}
         onCancel={() => checkoutState(false)}
       />
     );
