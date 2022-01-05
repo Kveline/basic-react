@@ -25,6 +25,23 @@ const cartSlice = createSlice({
         state.items.push({ ...itemAdded, quantity: 1 });
       }
     },
+
+    removeItem(state, payload) {
+      const itemId = payload.payload;
+
+      const existingCartItemIndex = state.items.findIndex(
+        (item) => item.id === itemId
+      );
+      const existingCartItem = state.items[existingCartItemIndex];
+      //   kalau jumlahnya lebih dari 1
+      if (existingCartItem.quantity > 1) {
+        state.items[existingCartItemIndex].quantity -= 1;
+      }
+      //   jumlah kurang dari 1
+      else {
+        state.items.splice(existingCartItemIndex, 1);
+      }
+    },
   },
 });
 
