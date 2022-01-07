@@ -3,7 +3,7 @@ import Cart from "./components/Cart/Cart";
 import Layout from "./components/Layout/Layout";
 import Products from "./components/Shop/Products";
 import Notification from "./components/UI/Notification";
-import { sendCartData } from "./store/cart";
+import { sendCartData, fetchCartData } from "./store/cart-action";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -15,6 +15,11 @@ function App() {
   const showCart = useSelector((state) => state.ui.cartIsVisible);
   const cart = useSelector((state) => state.cart);
   const notification = useSelector((state) => state.ui.notification);
+
+  // fetch cart data
+  useEffect(() => {
+    dispatch(fetchCartData());
+  }, [dispatch]);
 
   // watch cart state in redux and if cart changed we send it to server
   useEffect(() => {
