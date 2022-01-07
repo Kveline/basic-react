@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, Fragment } from "react";
 import Cart from "./components/Cart/Cart";
 import Layout from "./components/Layout/Layout";
 import Products from "./components/Shop/Products";
+import Notification from "./components/UI/Notification";
 
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "./store/ui";
@@ -60,10 +61,19 @@ function App() {
   }, [cart, dispatch]);
 
   return (
-    <Layout>
-      {showCart && <Cart />}
-      <Products />
-    </Layout>
+    <Fragment>
+      {notification && (
+        <Notification
+          status={notification.status}
+          title={notification.title}
+          message={notification.message}
+        />
+      )}
+      <Layout>
+        {showCart && <Cart />}
+        <Products />
+      </Layout>
+    </Fragment>
   );
 }
 
