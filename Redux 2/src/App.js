@@ -7,6 +7,9 @@ import Notification from "./components/UI/Notification";
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "./store/ui";
 
+// for coditional useEffect
+let isInitial = true;
+
 function App() {
   const dispatch = useDispatch();
   const showCart = useSelector((state) => state.ui.cartIsVisible);
@@ -47,6 +50,12 @@ function App() {
 
       const responseData = await response.json();
     };
+
+    // dont send data if we are in first load
+    if (isInitial) {
+      isInitial = false;
+      return;
+    }
 
     sendCartData().catch((error) => {
       // send notif
