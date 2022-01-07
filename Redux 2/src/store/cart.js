@@ -20,7 +20,7 @@ const cartSlice = createSlice({
       if (existingCartItem) {
         state.items[existingCartItemIndex].quantity += 1;
       }
-      //  no item exist and we have to add it
+      //  no item exist and we must add it
       else {
         state.items.push({ ...itemAdded, quantity: 1 });
       }
