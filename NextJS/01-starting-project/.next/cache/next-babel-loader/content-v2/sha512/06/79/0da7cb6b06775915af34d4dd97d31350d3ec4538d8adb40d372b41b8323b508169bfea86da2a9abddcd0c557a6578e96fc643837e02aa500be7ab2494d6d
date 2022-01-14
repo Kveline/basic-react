@@ -1,0 +1,1 @@
+{"ast":null,"code":"function HomePage(params) {}","map":{"version":3,"sources":["C:/Users/Yusuf/Documents/GitHub/basic-react/NextJS/01-starting-project/pages/index.js"],"names":["HomePage","params"],"mappings":"AAAA,SAASA,QAAT,CAAkBC,MAAlB,EAA0B,CAAE","sourcesContent":["function HomePage(params) {}\r\n"]},"metadata":{},"sourceType":"script"}
