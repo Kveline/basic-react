@@ -22,16 +22,29 @@ function HomePage(props) {
   return <MeetupList meetups={props.meetups} />;
 }
 
-// pre rendering data, execute during build process, for static
-export async function getStaticProps() {
-  // get data
+//  good for data changes frequently
+export async function getServerSideProps(context) {
+  const req = context.req;
+  const res = context.res;
+
+  // run on the server
   return {
     props: {
       meetups: DUMMY_MEETUPS,
     },
-    // if we need to change data, revalidate 2 seconds will wait until regenerate data for incoming request
-    revalidate: 2,
   };
 }
+
+// pre rendering data, execute during build process, for static : good for static website
+// export async function getStaticProps() {
+//   // get data
+//   return {
+//     props: {
+//       meetups: DUMMY_MEETUPS,
+//     },
+//     // if we need to change data, revalidate 2 seconds will wait until regenerate data for incoming request
+//     revalidate: 2,
+//   };
+// }
 
 export default HomePage;
