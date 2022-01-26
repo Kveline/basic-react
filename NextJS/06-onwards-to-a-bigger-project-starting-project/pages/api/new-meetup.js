@@ -1,26 +1,16 @@
-import { MongoClient } from "mongodb";
+import clientPromise from "../../lib/mongodb";
 
 // /api/new-meetup
 // POST /api/new-meetup
 
 async function handler(req, res) {
+  const client = await clientPromise;
+  const db = client.db("meetup");
+
   if (req.method === "POST") {
-    const data = req.body;
-
-    const client = await MongoClient.connect(
-      "mongodb+srv://yusuflk9:Salaman12@cluster0.cfxhs.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-    );
-    const db = client.db();
-
-    const meetupsCollection = db.collection("meetups");
-
-    const result = await meetupsCollection.insertOne(data);
-
-    console.log(result);
-
-    client.close();
-
-    res.status(201).json({ message: "Meetup inserted!" });
+    let bodyObject = JSON.parse(req.body);
+    let newPost = await db.collection("meetups").insertOne(bodyObject);
+    res.json(newPost);
   }
 }
 
