@@ -12,6 +12,11 @@ async function handler(req, res) {
     let newPost = await db.collection("meetups").insertOne(bodyObject);
     res.json(newPost);
   }
+
+  if (req.method === "GET") {
+    const posts = await db.collection("meetups").find({}).toArray();
+    res.json({ status: 200, data: posts });
+  }
 }
 
 export default handler;
